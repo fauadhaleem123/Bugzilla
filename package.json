@@ -1,5 +1,7 @@
 {
   "name": "bugZilla",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^3.4.1"
+  }
 }

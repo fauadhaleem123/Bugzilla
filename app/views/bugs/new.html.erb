@@ -23,20 +23,18 @@
                 <%= f.label :Type, style: "float:left; "%><br/>
                 <div id = "radio">
                     <div class = "form-check"> 
-                        <%= f.radio_button :type, 'Feature', class: "form-check-input", id: "materialChecked2" %>
+                        <%= f.radio_button :type, 'Feature', class: "form-check-input inactive", id: "materialChecked2" %>
                         <%= f.label :Feature, class: "form-check-label", for: "materialChecked2" %>
                     </div>
                     <div class = "form-check"> 
-                        <%= f.radio_button :type, 'Bug', class: "form-check-input", id: "materialChecked2", style: "float:left;" %>
+                        <%= f.radio_button :type, 'Bug', class: "form-check-input active", id: "materialChecked2", style: "float:left;" %>
                         <%= f.label "Bug", class: "form-check-label", for: "materialChecked2", style: "float:left;" %>
                     </div>
                 </div>
             </div>
-            <% if false %>
                 <div class = "form-group">
-                    <%= f.select :status, ['New', 'Started', 'Resolved'], {}, class: "form-control" %>
+                    <%= f.select :status, ['New', 'Started', 'Completed'], {}, class: "form-control status"  %>
                 </div>
-            <% end %>
             <%= f.submit class: "btn btn-info btn-block" %>
         <% end %>
     </div>

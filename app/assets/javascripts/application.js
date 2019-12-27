@@ -11,7 +11,35 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery
 //= require activestorage
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function() {
+    $('.inactive').prop("checked",true);   
+    });
+  
+
+$(document).ready(function() {
+    $('.inactive').click(function(event){
+      var select = $('.status');
+      select.empty();
+      select.append('<option value="">New</option>');
+      select.append('<option value="">Started</option>');
+      select.append('<option value="">Completed</option>');
+    });
+  }
+)
+
+$(document).ready(function() {
+    $('.active').click(function(event){
+      var select = $('.status');
+      select.empty();
+      select.append('<option value="">New</option>');
+      select.append('<option value="">Started</option>');
+      select.append('<option value="">Resolved</option>');
+    });
+  }
+)

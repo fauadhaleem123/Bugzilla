@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+    before_action :authenticate_user!
+
     def index
         @projects = Project.all
     end
@@ -7,7 +9,7 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:id])
     end
     def new
-        @project = Project.new
+        @project = current_user.projects.build
     end
 
     def edit
@@ -15,9 +17,9 @@ class ProjectsController < ApplicationController
     end
 
     def create
-        @project = Project.new(project_params)
-
+        @project = current_user.projects.build(project_params)
         if @project.save
+           @project.users << current_user
             redirect_to @project
         else
             render "new"

@@ -68,3 +68,5 @@ gem 'rmagick', '~> 4.0'
 gem 'carrierwave', '~> 2.0', '>= 2.0.2'
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
+
+gem 'jquery-rails', '~> 4.3', '>= 4.3.5'

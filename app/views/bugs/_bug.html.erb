@@ -1,0 +1,16 @@
+    <p>
+        <strong>Bug Title: </strong>
+        <%= bug.title %>
+    </p>
+    <p>
+        <strong>Deadline: </strong>
+        <%= bug.deadline %>
+    </p>
+    <p>
+        <strong>Screenshot: </strong>
+        <%= image_tag bug.image_url(:thumb).to_s %>
+    </p>
+    <p>
+        <strong>Type: </strong>
+        <%= bug.type %>
+    </p>

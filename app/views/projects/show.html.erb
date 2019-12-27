@@ -1,0 +1,21 @@
+<div class = "container">
+    <div class = "jumbotron" style = "margin-top:3%;">
+        <p>
+            <strong>Title:</strong>
+            <%= @project.title %>
+        </p>
+        <p>
+            <strong>Description:</strong>
+            <%= @project.description %>
+        </p>
+        <p>
+            <strong>Code:</strong>
+            <%= @project.code %>
+        </p>
+        <h2>Bugs</h2>
+        <%= render @project.bugs %>
+        <%= link_to "Back", projects_path, class: "btn btn-light"%>
+        <%= link_to "Edit", edit_project_path( @project ), class: "btn btn-light"%>
+        <%= link_to "Add Bugs", new_project_bug_path(@project), class: "btn btn-light"%>
+    </div>
+</div>

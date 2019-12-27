@@ -1,0 +1,19 @@
+<div class = "container">
+    <div class = "jumbotron" style = "margin-top:3%;">
+        <%= link_to projects_path, style: "float: right;" do%>
+            <i class = "glyphicon glyphicon-remove"></i>
+        <% end %>
+        <% if @project.errors.any? %>
+            <div id = "error_explanation">
+                <h4>
+                    The following 
+                    <%= pluralize(@project.errors.count, "error") %>
+                    prohibited this project from being saved :
+                </h4>
+                <ul>
+                    <% @project.errors.full_messages.each do |message|%>
+                        <li><%= message %>.</li>
+                    <% end %>
+                </ul>
+            </div>
+        <% end %>

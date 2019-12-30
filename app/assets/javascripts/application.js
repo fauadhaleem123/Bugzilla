@@ -12,34 +12,35 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery.turbolinks
 //= require activestorage
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function() {
+$(document).on('turbolinks:load',function() {
     $('.inactive').prop("checked",true);   
     });
   
 
-$(document).ready(function() {
+$(document).on('turbolinks:load',function() {
     $('.inactive').click(function(event){
       var select = $('.status');
       select.empty();
-      select.append('<option value="">New</option>');
-      select.append('<option value="">Started</option>');
-      select.append('<option value="">Completed</option>');
+      select.append('<option value="New">New</option>');
+      select.append('<option value="Started">Started</option>');
+      select.append('<option value="Completed">Completed</option>');
     });
   }
 )
 
-$(document).ready(function() {
+$(document).on('turbolinks:load',function() {
     $('.active').click(function(event){
       var select = $('.status');
       select.empty();
-      select.append('<option value="">New</option>');
-      select.append('<option value="">Started</option>');
-      select.append('<option value="">Resolved</option>');
+      select.append('<option value="New">New</option>');
+      select.append('<option value="Started">Started</option>');
+      select.append('<option value="Resolved">Resolved</option>');
     });
   }
 )

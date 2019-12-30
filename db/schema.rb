@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_27_135004) do
+ActiveRecord::Schema.define(version: 2019_12_30_092700) do
 
   create_table "bugs", force: :cascade do |t|
     t.string "title"
     t.date "deadline"
-    t.string "type"
+    t.string "bug_type"
     t.string "status"
     t.integer "project_id"
     t.datetime "created_at", null: false

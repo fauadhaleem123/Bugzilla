@@ -1,0 +1,23 @@
+<div class = "container">
+    <div class = "jumbotron">
+        <h3>Your Projects</h3>
+        <table class = "table table-borderless">
+            <tr>
+                <th scope = "col">Email</th>
+                <th scope = "col">Role</th>
+                <th scope = "col"></th>
+            </tr>
+            <% @users.each do |user| %>
+                <% if user.role != 'Manager' && user != current_user && ! @project.users.include?(user) %>
+                    <tr>
+                        <td><%= user.email %></td>
+                        <td><%= user.role %></td>
+                        <% if policy(@project).assign_user? %>
+                            <td><%= link_to "Assign", assign_user_project_path(:user_id => user.id, :id => @project.id) %></td>
+                        <% end %>
+                    </tr>
+                <% end %>
+            <% end %>
+        </table>
+    </div>
+</div> 

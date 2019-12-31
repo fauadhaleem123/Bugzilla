@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :projects do
-    resources :bugs
+      get :users, on: :collection
+      get :assign_user, on: :member
+      get :remove_user, on: :member
+    resources :bugs do
+      get :assign_bug, on: :member
+    end
   end
 
   root "projects#index"

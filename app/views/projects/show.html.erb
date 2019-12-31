@@ -12,10 +12,33 @@
             <strong>Code:</strong>
             <%= @project.code %>
         </p>
-        <h2>Bugs</h2>
-        <%= render @project.bugs %>
+        <% if @project.users.length > 1 && current_user.role == 'Manager' %>
+            <h3>Assigned QAs/Developers on your project</h3>
+            <table class = "table table-borderless">
+                <tr>
+                    <th scope = "col">Email</th>
+                    <th scope = "col">Role</th>
+                    <th scope = "col"></th>
+                </tr>
+            
+                <% @project.users.each do |user| %>
+                    <% if user.role != 'Manager' %>    
+                        <tr>
+                            <td><%= user.email %></td>
+                            <td><%= user.role %></td>
+                            <td><%= link_to "Remove", remove_user_project_path(:user_id => user.id, :project_id => @project.id) %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+            </table>
+        <% end %>
+        <% if @project.bugs.length > 0 %>
+            <h2>Bugs</h2>
+            <%= render @project.bugs %>
+        <% end %>
         <%= link_to "Back", projects_path, class: "btn btn-light"%>
         <%= link_to "Edit", edit_project_path( @project ), class: "btn btn-light"%>
         <%= link_to "Add Bugs", new_project_bug_path(@project), class: "btn btn-light"%>
+        <%= link_to "Assign Developer/QA",users_projects_path(:id => @project.id), class: "btn btn-light"%>
     </div>
 </div>

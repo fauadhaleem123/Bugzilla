@@ -3,10 +3,26 @@
         <%= link_to projects_path, style: "float: right;" do%>
             <i class = "glyphicon glyphicon-remove"></i>
         <% end %>
+        <% if true %>
+            <% if @bug.errors.any? %>
+                <div id = "error_explanation">
+                    <h4>
+                        The following 
+                        <%= pluralize(@bug.errors.count, "error") %>
+                        prohibited this bug from being saved :
+                    </h4>
+                    <ul>
+                        <% @bug.errors.full_messages.each do |message|%>
+                            <li><%= message %>.</li>
+                        <% end %>
+                    </ul>
+                </div>
+            <% end %>
+        <% end %>
 
         <p class = "h2 mb-4">New Bug for <%= @project.title %></p>
 
-        <%= form_with(model: [ @project, @project.bugs.build ], html: {class: "text-center border border-light p-5", multipart: true}, local: true ) do |f| %>  
+        <%= form_with(model: [ @project, @bug ], html: {class: "text-center border border-light p-5", multipart: true}, local: true ) do |f| %>  
             <div class = "form-group">
                 <%= f.label :Title, style: "float:left;" %>
                 <%= f.text_field :title, class: "form-control mb-4",placeholder: "Add a descriptive title" %>

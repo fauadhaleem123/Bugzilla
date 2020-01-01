@@ -12,9 +12,7 @@
                     <tr>
                         <td><%= user.email %></td>
                         <td><%= user.role %></td>
-                        <% if policy(@project).assign_user? %>
-                            <td><%= link_to "Assign", assign_user_project_path(:user_id => user.id, :id => @project.id) %></td>
-                        <% end %>
+                        <td><%= link_to "Assign", assign_user_project_path(:user_id => user.id, :id => @project.id) %></td>
                     </tr>
                 <% end %>
             <% end %>

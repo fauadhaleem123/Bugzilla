@@ -17,16 +17,20 @@
                         <td><%= project.description %></td>
                         <td><%= project.code %></td>
                         <td><%= link_to "Show", project_path(project) %></td>
-                        <td><%= link_to "Edit", edit_project_path(project) %></td>
-                        <td><%= link_to "Destroy", project_path(project),
-                                method: :delete,
-                                data: { confirm: "Are you sure?"} %></td>
+                        <% if policy(project).edit? %>
+                            <td><%= link_to "Edit", edit_project_path(project) %></td>
+                        <% end %>
+                        <% if policy(project).destroy? %>
+                            <td><%= link_to "Destroy", project_path(project),
+                                    method: :delete,
+                                    data: { confirm: "Are you sure?"} %></td>
+                        <% end %>
                     </tr>
                 <% end %>
             <% end %>
         </table>
         <% if policy(Project).create?%>
-        <%= link_to "New Project", new_project_path, class: "btn btn-primary" %>
+            <%= link_to "New Project", new_project_path, class: "btn btn-primary" %>
         <% end %>
     </div>
 </div> 

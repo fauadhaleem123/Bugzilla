@@ -1,23 +1,50 @@
-    <p>
-        <strong>Bug Title: </strong>
-        <%= bug.title %>
-    </p>
-    <p>
-        <strong>Deadline: </strong>
-        <%= bug.deadline %>
-    </p>
-    <p>
-        <strong>Screenshot: </strong>
-        <%= image_tag bug.image_url(:thumb).to_s %>
-    </p>
-    <p>
-        <strong>Type: </strong>
-        <%= bug.bug_type %>
-    </p>
-    <p>
-        <strong>status: </strong>
-        <%= bug.status %>
-    </p>
-    <% if current_user.role =="Developer" && current_user.bug_id != bug.id %>
-        <%= link_to "Assign Bug", assign_bug_project_bug_path(:user_id => current_user.id, :bug_id => bug.id) %>
-    <% end %>
+    
+    <tr>
+        <td><%= bug.title %></td>
+        <td><%= bug.deadline %></td>
+        <td><%= bug.bug_type %></td>
+        <td><%= bug.status %></td>
+        <td><%= link_to "Show", project_bug_path(bug, :project_id => @project.id) %></td>
+        <% if policy(bug).edit?  %>
+            <td><%= link_to "Edit", edit_project_bug_path(bug, :project_id => @project.id) %></td>
+        <% end %>
+        <% if policy(bug).destroy?  %>
+            <td><%= link_to "Destroy", project_bug_path(bug, :project_id => @project.id),
+                    method: :delete,
+                    data: { confirm: "Are you sure?"} %></td>
+        <% end %>
+    </tr>
+
+    <% if false %>
+        <p>
+            <strong>Bug Title: </strong>
+            <%= bug.title %>
+        </p>
+        <p>
+            <strong>Deadline: </strong>
+            <%= bug.deadline %>
+        </p>
+        <p>
+            <strong>Screenshot: </strong>
+            <%= image_tag bug.image_url(:thumb).to_s %>
+        </p>
+        <p>
+            <strong>Type: </strong>
+            <%= bug.bug_type %>
+        </p>
+        <p>
+            <strong>status: </strong>
+            <%= bug.status %>
+        </p>
+        <% if current_user.role =="Developer" && bug.user_id.nil? && bug.status == 'New'  %>
+            <%= link_to "Assign Bug", assign_bug_project_bug_path(:user_id => current_user.id, :bug_id => bug.id, :project_id => @project.id) %>
+        <% end %>
+
+        <% unless bug.user_id.nil?%>
+            <p>
+                <strong>Assigned To: </strong>
+                <% @user = User.find(bug.user_id) %>
+                <%= @user.email %>
+            </p>
+        <% end %>
+    <% end %>  

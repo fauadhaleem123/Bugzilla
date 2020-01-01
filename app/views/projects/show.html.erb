@@ -34,11 +34,26 @@
         <% end %>
         <% if @project.bugs.length > 0 %>
             <h2>Bugs</h2>
-            <%= render @project.bugs %>
+            <table class = "table table-borderless">
+                <tr>
+                    <th scope = "col">Bug Title</th>
+                    <th scope = "col">Deadline</th>
+                    <th scope = "col">Type</th>
+                    <th scope = "col">Status</th>
+                    <th scope = "col"></th>
+                    <th scope = "col"></th>
+                    <th scope = "col"></th>
+                </tr>
+                <%= render @project.bugs %>
+            </table>
         <% end %>
         <%= link_to "Back", projects_path, class: "btn btn-light"%>
         <%= link_to "Edit", edit_project_path( @project ), class: "btn btn-light"%>
-        <%= link_to "Add Bugs", new_project_bug_path(@project), class: "btn btn-light"%>
-        <%= link_to "Assign Developer/QA",users_projects_path(:id => @project.id), class: "btn btn-light"%>
+        <% if policy(@project.bugs.new).new? %>
+            <%= link_to "Add Bugs", new_project_bug_path(@project), class: "btn btn-light"%>
+        <% end %>
+        <% if policy(@project).assign_user? %>
+            <%= link_to "Assign Developer/QA",users_projects_path(:id => @project.id), class: "btn btn-light"%>
+        <% end %>
     </div>
 </div>

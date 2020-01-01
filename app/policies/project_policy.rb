@@ -8,14 +8,18 @@ class ProjectPolicy < ApplicationPolicy
     end
 
     def edit?
-        @user.role == "Manager" && @record.users.include(@user)
+        @user.role == "Manager" && @record.users.include?(@user)
+    end
+
+    def destroy?
+        @user.role == "Manager" && @record.users.include?(@user)
     end
 
     def assign_user?
-        @user.role == "Manager" && @record.users.include(@user)
+        @user.role == "Manager" && @record.users.include?(@user)
     end
 
     def remove_user?
-        @user.role == "Manager" && @record.users.include(@user)
+        @user.role == "Manager" && @record.users.include?(@user)
     end  
 end    

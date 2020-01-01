@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get :remove_user, on: :member
     resources :bugs do
       get :assign_bug, on: :member
+      get :mark_resolved, on: :member
     end
   end
 

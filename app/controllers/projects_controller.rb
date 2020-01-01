@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
 
     def update
         @project = Project.find(params[:id])
+        authorize @project
         if @project.update(project_params)
             redirect_to @project
         else
@@ -53,16 +54,16 @@ class ProjectsController < ApplicationController
     def assign_user
         @project = Project.find(params[:id])
         @user = User.find(params[:user_id])
-        authorize @project
         @project.users << @user
+        authorize @project
 
         redirect_to project_path(@project)
     end
 
     def remove_user
         @project = Project.find(params[:project_id])
-        @user = User.find(params[:user_id])
         authorize @project
+        @user = User.find(params[:user_id])
         @project.users.delete(@user)
 
         redirect_to project_path(@project)

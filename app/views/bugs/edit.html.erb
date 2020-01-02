@@ -1,45 +1,10 @@
 <div class = "container">
     <div class = "jumbotron" style = "margin-top:3%;">
-        <%= link_to projects_path, style: "float: right;" do%>
-            <i class = "glyphicon glyphicon-remove"></i>
-        <% end %>
- 
-        <p class = "h2 mb-4">New Bug for <%= @project.title %></p>
 
-        <%= form_with(model: [ @project, @bug ], html: {class: "text-center border border-light p-5", multipart: true}, local: true ) do |f| %>  
-            <div class = "form-group">
-                <%= f.label :Title, style: "float:left;" %>
-                <%= f.text_field :title, class: "form-control mb-4",placeholder: "Add a descriptive title" %>
-            </div>
-            <div class = "form-group">
-                <%= f.label :Deadline, style: "float:left;" %>
-                <%= f.date_field :deadline, class: 'form-control rounded-0', 
-                placeholder: 'Deadline'%>
-            </div>
-            <div class = "form-group">
-                <%= f.label :Screenshot, style: "float:left;" %>
-                <%= f.file_field :image %>
-            </div>
-            <div class = "form-group">
-                <%= f.label :Type, style: "float:left; "%><br/>
-                <div id = "radio">
-                    <div class = "form-check"> 
-                        <%= f.radio_button :bug_type, 'Feature', class: "form-check-input inactive", id: "materialChecked2" %>
-                        <%= f.label :Feature, class: "form-check-label", for: "materialChecked2" %>
-                    </div>
-                    <div class = "form-check"> 
-                        <%= f.radio_button :bug_type, 'Bug', class: "form-check-input active", id: "materialChecked2", style: "float:left;" %>
-                        <%= f.label "Bug", class: "form-check-label", for: "materialChecked2", style: "float:left;" %>
-                    </div>
-                </div>
-            </div>
-            <br/>
-            <br/>
-            <div class = "form-group">
-                <%= f.label :Status, style: "float:left;" %>
-                <%= f.select :status, [['New','New'], ['Started','Started'], ['Completed','Completed']], {}, class: "form-control status"  %>
-            </div>
-            <%= f.submit class: "btn btn-info btn-block" %>
-        <% end %>
+        <%= render "error" %>
+        <p class = "h2 mb-4">Edit Bug for <%= @project.title %></p>
+        <%= render "form" %>
     </div>
 </div>
+
+       

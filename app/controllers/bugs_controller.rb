@@ -10,7 +10,7 @@ class BugsController < ApplicationController
         @bug = @project.bugs.create(bug_params)
 
         if @bug.save
-            redirect_to project_path(@project)
+            redirect_to @project
         else
             render 'new'
         end  
@@ -18,30 +18,28 @@ class BugsController < ApplicationController
 
     def show
         @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:id])
-
+        puts params
+        @bug = @project.bugs.find(params[:bug_id])
     end
 
     def edit
         @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:id])
-
+        @bug = @project.bugs.find(params[:bug_id])
     end
 
     def update
         @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:id])
+        @bug = @project.bugs.find(params[:bug_id])
         if @bug.update(bug_params)
             redirect_to project_path(@project)
         else
             render 'edit'
         end
-
     end
 
     def destroy
         @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:id])
+        @bug = @project.bugs.find(params[:bug_id])
         authorize @bug
         @bug.destroy
 
@@ -79,6 +77,6 @@ class BugsController < ApplicationController
 
     private
         def bug_params
-            params.require(:bug).permit(:title,:deadline,:image,:bug_type,:status)
+            params.require(:bug).permit(:title, :deadline, :image, :bug_type, :status)
         end
 end

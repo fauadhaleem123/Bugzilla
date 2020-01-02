@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       get :users, on: :collection
       get :assign_user, on: :member
       get :remove_user, on: :member
-    resources :bugs do
+    resource :bugs do
       get :assign_bug, on: :member
       get :mark_resolved, on: :member
     end

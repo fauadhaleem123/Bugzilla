@@ -12,8 +12,8 @@
             <strong>Code:</strong>
             <%= @project.code %>
         </p>
-        <% if @project.users.length > 1 && current_user.role == 'Manager' %>
-            <h3>Assigned QAs/Developers on your project</h3>
+        <% if @project.users.length > 1  %>
+            <h3>Assigned QAs/Developers on this project</h3>
             <table class = "table table-borderless">
                 <tr>
                     <th scope = "col">Email</th>
@@ -26,7 +26,9 @@
                         <tr>
                             <td><%= user.email %></td>
                             <td><%= user.role %></td>
-                            <td><%= link_to "Remove", remove_user_project_path(:user_id => user.id, :project_id => @project.id) %></td>
+                            <% if policy(@project).remove_user? %>
+                                <td><%= link_to "Remove", remove_user_project_path(:user_id => user.id, :project_id => @project.id) %></td>
+                            <% end %>
                         </tr>
                     <% end %>
                 <% end %>
@@ -50,7 +52,7 @@
         <%= link_to "Back", projects_path, class: "btn btn-light"%>
         <%= link_to "Edit", edit_project_path( @project ), class: "btn btn-light"%>
         <% if policy(@project.bugs.new).new? %>
-            <%= link_to "Add Bugs", new_project_bug_path(@project), class: "btn btn-light"%>
+            <%= link_to "Add Bugs", new_project_bugs_path(@project), class: "btn btn-light"%>
         <% end %>
         <% if policy(@project).assign_user? %>
             <%= link_to "Assign Developer/QA",users_projects_path(:id => @project.id), class: "btn btn-light"%>

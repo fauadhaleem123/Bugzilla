@@ -1,19 +1,16 @@
-        <%= form_with model: @project, html: {class: "text-center border border-light p-5"}, 
-        local: true do |f| %>
-          
-            
-            <div class = "form-group">
-                <%= f.text_field :title, class: "form-control mb-4",placeholder: "Title" %>
-            </div>
-            <div class = "form-group">
-                <%= f.text_area :description, class: 'form-control rounded-0', 
-                id: 'exampleFormControlTextarea2', rows: '3', placeholder: 'Description'%>
-            </div>
-            <div class = "form-group">
-                <%= f.text_area :code, class: 'form-control rounded-0',
-                id: 'exampleFormControlTextarea2', rows: '10', placeholder: 'Enter your code here'%>
-            </div>
-            <%= f.submit class: "btn btn-info btn-block" %>
-        <% end %>
+<%= form_with model: @project, html: {class: "text-center border border-light p-5"}, local: true do |f| %>        
+    <div class = "form-group">
+        <%= f.text_field :title, class: "form-control mb-4",placeholder: "Title" %>
     </div>
-</div> 
+    <div class = "form-group">
+        <%= f.text_area :description, class: 'form-control rounded-0', 
+        id: 'exampleFormControlTextarea2', rows: '3', placeholder: 'Description'%>
+    </div>
+    <div class = "form-group">
+        <%= f.text_area :code, class: 'form-control rounded-0',
+        id: 'exampleFormControlTextarea2', rows: '10', placeholder: 'Enter your code here'%>
+    </div>
+    <%= f.submit class: "btn btn-info btn-block" %>
+<% end %>
+  
+ 

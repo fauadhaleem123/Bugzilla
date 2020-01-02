@@ -1,0 +1,8 @@
+fix authorizations
+use filters in controller(before and and after)
+fix project-manager relation|
+add bug creator data
+use pundit scope
+use policy in views
+fix view partials
+add user role validation

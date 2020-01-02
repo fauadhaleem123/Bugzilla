@@ -1,0 +1,18 @@
+<%= link_to project_path(@project), style: "float: right;" do%>
+    <i class = "glyphicon glyphicon-remove"></i>
+<% end %>
+
+<% if @bug.errors.any? %>
+    <div id = "error_explanation">
+        <h4>
+            The following 
+            <%= pluralize(@bug.errors.count, "error") %>
+            prohibited this bug from being saved :
+        </h4>
+        <ul>
+            <% @bug.errors.full_messages.each do |message|%>
+                <li><%= message %>.</li>
+            <% end %>
+        </ul>
+    </div>
+<% end %>

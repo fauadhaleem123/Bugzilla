@@ -64,6 +64,9 @@ class ProjectsController < ApplicationController
         @project = Project.find(params[:project_id])
         authorize @project
         @user = User.find(params[:user_id])
+        if @user.role == "Developer"
+            assigned_projects(@user, @project)
+        end
         @project.users.delete(@user)
 
         redirect_to project_path(@project)
@@ -72,6 +75,22 @@ class ProjectsController < ApplicationController
     private
         def project_params
             params.require(:project).permit(:title, :description, :code)
+        end
+
+        def assigned_projects(user, project)
+            @bugs = project.bugs.all
+            project.bugs.each do |bug|
+                if bug.user_id == user.id
+                    puts "$$$$$"
+                    bug.user_id = nil
+                    bug.save
+                    if bug.status == "Started"
+                        bug.status = "New"
+                        bug.save
+                    end
+                end
+            end
+
         end
 end
  

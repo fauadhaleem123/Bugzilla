@@ -4,12 +4,12 @@
         <td><%= bug.deadline %></td>
         <td><%= bug.bug_type %></td>
         <td><%= bug.status %></td>
-        <td><%= link_to "Show", project_bug_path(bug, :project_id => @project.id) %></td>
+        <td><%= link_to "Show", project_bugs_path(:bug_id => bug.id, :project_id => @project.id) %></td>
         <% if policy(bug).edit?  %>
-            <td><%= link_to "Edit", edit_project_bug_path(bug, :project_id => @project.id) %></td>
+            <td><%= link_to "Edit", edit_project_bugs_path(:bug_id => bug.id, :project_id => @project.id) %></td>
         <% end %>
         <% if policy(bug).destroy?  %>
-            <td><%= link_to "Destroy", project_bug_path(bug, :project_id => @project.id),
+            <td><%= link_to "Destroy", project_bugs_path(:bug_id => bug.id, :project_id => @project.id),
                     method: :delete,
                     data: { confirm: "Are you sure?"} %></td>
         <% end %>

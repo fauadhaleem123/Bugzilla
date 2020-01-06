@@ -5,7 +5,7 @@ class Bug < ApplicationRecord
 
   mount_uploader :image, ImageUploader
   validates :title, presence: true,
-                    length: {minimum: 5}
+                    length: {minimum: 5}, uniqueness: true
   validate  :deadline_cannot_be_in_the_past
 
   def deadline_cannot_be_in_the_past

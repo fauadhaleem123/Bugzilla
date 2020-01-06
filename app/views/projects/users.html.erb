@@ -1,6 +1,6 @@
 <div class = "container">
     <div class = "jumbotron">
-        <h3>Your Projects</h3>
+        <h3>All Developer/QAs</h3>
         <table class = "table table-borderless">
             <tr>
                 <th scope = "col">Email</th>
@@ -8,13 +8,11 @@
                 <th scope = "col"></th>
             </tr>
             <% @users.each do |user| %>
-                <% if user.role != 'Manager' && user != current_user && ! @project.users.include?(user) %>
-                    <tr>
-                        <td><%= user.email %></td>
-                        <td><%= user.role %></td>
-                        <td><%= link_to "Assign", assign_user_project_path(:user_id => user.id, :id => @project.id) %></td>
-                    </tr>
-                <% end %>
+                <tr>
+                    <td><%= user.email %></td>
+                    <td><%= user.type %></td>
+                    <td><%= link_to "Assign", assign_user_project_path(:user_id => user.id, :id => @project.id) %></td>
+                </tr>
             <% end %>
         </table>
     </div>

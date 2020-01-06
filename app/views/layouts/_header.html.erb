@@ -12,7 +12,7 @@
         
             <div class = "collapse navbar-collapse" id = "bs-example-navbar-collapse-1">
                 <ul class = "nav navbar-nav">
-                    <% @details = current_user.email + " : " + current_user.role  %>
+                    <% @details = current_user.email + " : " + current_user.type.to_s  %>
                     <li><%= link_to @details, root_path, class: 'Details'%></li>
                     <li><%= link_to "Account", edit_user_registration_path %></li>
                     <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>

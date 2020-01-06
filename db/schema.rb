@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_01_082632) do
+ActiveRecord::Schema.define(version: 2020_01_03_160833) do
 
   create_table "bugs", force: :cascade do |t|
     t.string "title"
@@ -21,9 +21,26 @@ ActiveRecord::Schema.define(version: 2020_01_01_082632) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
-    t.integer "user_id"
+    t.integer "developer_id"
+    t.integer "qa_id"
+    t.index ["developer_id"], name: "index_bugs_on_developer_id"
     t.index ["project_id"], name: "index_bugs_on_project_id"
-    t.index ["user_id"], name: "index_bugs_on_user_id"
+    t.index ["qa_id"], name: "index_bugs_on_qa_id"
+  end
+
+  create_table "developers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "developers_projects", id: false, force: :cascade do |t|
+    t.integer "developer_id", null: false
+    t.integer "project_id", null: false
+  end
+
+  create_table "managers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "projects", force: :cascade do |t|
@@ -32,11 +49,17 @@ ActiveRecord::Schema.define(version: 2020_01_01_082632) do
     t.text "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "manager_id"
   end
 
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
+  create_table "projects_qas", id: false, force: :cascade do |t|
+    t.integer "qa_id", null: false
     t.integer "project_id", null: false
+  end
+
+  create_table "qas", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_01_01_082632) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role"
+    t.string "type", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

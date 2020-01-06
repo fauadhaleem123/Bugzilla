@@ -1,6 +1,7 @@
 class Bug < ApplicationRecord
   belongs_to :project
-  belongs_to :user, optional: true
+  belongs_to :developer, optional: true
+  belongs_to :qa
 
   mount_uploader :image, ImageUploader
   validates :title, presence: true,
@@ -12,3 +13,4 @@ class Bug < ApplicationRecord
       deadline.present? and deadline < Date.today
   end
 end 
+ 

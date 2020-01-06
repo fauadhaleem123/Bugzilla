@@ -1,12 +1,12 @@
 class ProjectsController < ApplicationController
     before_action :authenticate_user!
+    before_action :find_project, except: [:index, :new, :create, :remove_user]
 
     def index
-        @projects = Project.all
+        get_projects
     end
 
     def show
-        @project = Project.find(params[:id])
         authorize @project
     end
     def new
@@ -15,22 +15,20 @@ class ProjectsController < ApplicationController
     end
 
     def edit
-        @project = Project.find(params[:id])
         authorize @project
     end
-
+ 
     def create
         @project = current_user.projects.build(project_params)
+        redirect_to @project
         if @project.save
-           @project.users << current_user
-            redirect_to @project
+           @project.manager_id = current_user.id
         else
             render "new"
         end
     end
-
+   
     def update
-        @project = Project.find(params[:id])
         authorize @project
         if @project.update(project_params)
             redirect_to @project
@@ -40,35 +38,41 @@ class ProjectsController < ApplicationController
     end
 
     def destroy
-        @project = Project.find(params[:id])
+        authorize @project
+
         @project.destroy
 
         redirect_to projects_path
     end
 
     def users
-        @users = User.all
-        @project = Project.find(params[:id])
+        get_users(@project)
     end
-
+  
     def assign_user
-        @project = Project.find(params[:id])
         @user = User.find(params[:user_id])
-        @project.users << @user
         authorize @project
+        if @user.type == "Developer"
+            @project.developers << @user
+        else @user.type == "Qa"
+            @project.qas << @user
+        end
 
         redirect_to project_path(@project)
     end
 
     def remove_user
         @project = Project.find(params[:project_id])
-        authorize @project
         @user = User.find(params[:user_id])
-        if @user.role == "Developer"
+        authorize @project
+        if @user.type == "Developer"
             assigned_projects(@user, @project)
         end
-        @project.users.delete(@user)
-
+        if @user.type == "Developer"
+            @project.developers.delete(@user)
+        else @user.type == "Qa"
+            @project.qas.delete(@user)
+        end
         redirect_to project_path(@project)
     end
 
@@ -81,7 +85,6 @@ class ProjectsController < ApplicationController
             @bugs = project.bugs.all
             project.bugs.each do |bug|
                 if bug.user_id == user.id
-                    puts "$$$$$"
                     bug.user_id = nil
                     bug.save
                     if bug.status == "Started"
@@ -90,7 +93,26 @@ class ProjectsController < ApplicationController
                     end
                 end
             end
+        end
 
+        def find_project
+            @project = Project.find(params[:id])
+        end
+
+        def get_projects
+            @allprojects = Project.all
+            @projects = @allprojects.select do |project|
+                project.manager_id == current_user.id || project.qas.include?(current_user) || project.developers.include?(current_user)
+            end
+            @projects
+        end
+
+        def get_users(project)
+            @allusers = User.all
+            @users = @allusers.select do |user|
+                user.type != "Manager" && user != current_user && ! ( project.qas.include?(user) || project.developers.include?(user) )
+            end
+            @users
         end
 end
- 
+   

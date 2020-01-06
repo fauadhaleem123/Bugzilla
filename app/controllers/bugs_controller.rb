@@ -1,13 +1,17 @@
 class BugsController < ApplicationController
+    before_action :authenticate_user!
+    before_action :find_project
+    before_action :find_bug, except: [:new, :create]
+
     def new
-        @project = Project.find(params[:project_id])
         @bug = @project.bugs.new
         authorize @bug
     end
 
     def create
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.create(bug_params)
+        @bug = @project.bugs.new(bug_params)
+        authorize @bug
+        @bug.qa_id = current_user.id
 
         if @bug.save
             redirect_to @project
@@ -15,21 +19,18 @@ class BugsController < ApplicationController
             render 'new'
         end  
     end
-
+ 
     def show
-        @project = Project.find(params[:project_id])
-        puts params
-        @bug = @project.bugs.find(params[:bug_id])
+        authorize @bug
     end
 
     def edit
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:bug_id])
+        authorize @bug
     end
 
     def update
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:bug_id])
+        authorize @bug
+
         if @bug.update(bug_params)
             redirect_to project_path(@project)
         else
@@ -38,19 +39,16 @@ class BugsController < ApplicationController
     end
 
     def destroy
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:bug_id])
         authorize @bug
         @bug.destroy
 
         redirect_to project_path(@project)
     end
-
+ 
     def assign_bug
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:bug_id])
+        authorize @bug
         @user = User.find(params[:user_id])
-        @bug.user_id = @user.id
+        @bug.developer_id = @user.id
         @bug.status = "Started"
 
         if @bug.save
@@ -59,8 +57,7 @@ class BugsController < ApplicationController
     end
 
     def mark_resolved
-        @project = Project.find(params[:project_id])
-        @bug = @project.bugs.find(params[:bug_id])
+        authorize @bug
         if @bug.bug_type == "Feature"
             @bug.status = "Completed"
         else
@@ -78,5 +75,13 @@ class BugsController < ApplicationController
     private
         def bug_params
             params.require(:bug).permit(:title, :deadline, :image, :bug_type, :status)
+        end
+
+        def find_project
+            @project = Project.find(params[:project_id])
+        end
+
+        def find_bug
+            @bug = @project.bugs.find(params[:bug_id])
         end
 end

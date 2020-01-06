@@ -1,17 +1,34 @@
 class BugPolicy < ApplicationPolicy
     def new?
-        @user.role == "QA" && @record.project.users.include?(@user)
+        @user.type == "Qa" && @record.project.qas.include?(@user)
+    end
+
+    def create?
+        @user.type == "Qa" && @record.project.qas.include?(@user)
+    end
+
+    def show?
+        @record.project.qas.include?(@user) || @record.project.developers.include?(@user) || @record.project.manager_id == @user.id
     end
 
     def edit?
-        @id = @record.project_id
-        @project = Project.find(@id)
-        @user.role == "QA" && @project.users.include?(@user)
+        @user.type == "Qa" && @record.project.qas.include?(@user) && @record.qa_id == @user.id
+    end
+
+    def update?
+        @user.type == "Qa" && @record.project.qas.include?(@user) && @record.qa_id == @user.id
     end
 
     def destroy?
-        @id = @record.project_id
-        @project = Project.find(@id)
-        @user.role == "QA" && @project.users.include?(@user)
+        @user.type == "Qa" && @record.project.qas.include?(@user) && @record.qa_id == @user.id
+    end
+
+    def assign_bug?
+        @user.type == "Developer" && @record.project.developers.include?(@user) && @record.developer_id.nil? && @record.status == 'New'
+    end
+
+    def mark_resolved?
+        @user.type == "Developer" && @record.project.developers.include?(@user) && @record.developer_id == @user.id && @record.status == 'Started'
     end
 end
+ 

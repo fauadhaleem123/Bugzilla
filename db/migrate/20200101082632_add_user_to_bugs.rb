@@ -4,3 +4,4 @@ class AddUserToBugs < ActiveRecord::Migration[5.2]
     add_foreign_key :bugs, :users
   end
 end
+ 

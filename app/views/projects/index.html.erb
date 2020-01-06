@@ -11,22 +11,20 @@
                 <th scope = "col"></th>
             </tr>
             <% @projects.each do |project| %>
-                <% if project.users.include?(current_user) %>
-                    <tr>
-                        <td><%= project.title %></td>
-                        <td><%= project.description %></td>
-                        <td><%= project.code %></td>
-                        <td><%= link_to "Show", project_path(project) %></td>
-                        <% if policy(project).edit? %>
-                            <td><%= link_to "Edit", edit_project_path(project) %></td>
-                        <% end %>
-                        <% if policy(project).destroy? %>
-                            <td><%= link_to "Destroy", project_path(project),
-                                    method: :delete,
-                                    data: { confirm: "Are you sure?"} %></td>
-                        <% end %>
-                    </tr>
-                <% end %>
+                <tr>
+                    <td><%= project.title %></td>
+                    <td><%= project.description %></td>
+                    <td><%= project.code %></td>
+                    <td><%= link_to "Show", project_path(project) %></td>
+                    <% if policy(project).edit? %>
+                        <td><%= link_to "Edit", edit_project_path(project) %></td>
+                    <% end %>
+                    <% if policy(project).destroy? %>
+                        <td><%= link_to "Destroy", project_path(project),
+                                method: :delete,
+                                data: { confirm: "Are you sure?"} %></td>
+                    <% end %>
+                </tr>
             <% end %>
         </table>
         <% if policy(Project).create?%>
@@ -34,3 +32,5 @@
         <% end %>
     </div>
 </div> 
+
+  

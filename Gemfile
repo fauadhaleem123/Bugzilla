@@ -67,7 +67,7 @@ gem 'pry', '~> 0.12.2'
 
 gem 'rmagick', '~> 4.0'
 
-gem 'carrierwave', '~> 2.0', '>= 2.0.2'
+gem 'carrierwave', '~> 2.1'
 
 gem 'devise', '~> 4.7', '>= 4.7.1'
 
